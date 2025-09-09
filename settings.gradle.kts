@@ -1,3 +1,5 @@
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 pluginManagement {
     repositories {
         google {
@@ -21,3 +23,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "youth-in-faith"
 include(":app")
+include(":core:domain")
+include(":core:data")
+include(":core:ui")
