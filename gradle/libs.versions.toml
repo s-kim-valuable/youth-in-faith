@@ -10,7 +10,7 @@ activityCompose = "1.10.1"
 composeBom = "2025.08.01"
 jetbrainsKotlinJvm = "2.2.10"
 appcompat = "1.6.1"
-material = "1.10.0"
+material = "1.13.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
