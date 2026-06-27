@@ -12,6 +12,7 @@ jetbrainsKotlinJvm = "2.4.0"
 appcompat = "1.7.1"
 material = "1.13.0"
 hilt = "2.57.1"
+ksp = "2.4.0-1.0.31"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -41,4 +42,5 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
 android-library = { id = "com.android.library", version.ref = "agp" }
-hilt-android = {id = "com.google.dagger.hilt.android", version.ref = "hilt"}
+hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
