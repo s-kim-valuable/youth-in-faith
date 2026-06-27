@@ -12,8 +12,10 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.sekaguchi.youthinfaith.R
 import com.sekaguchi.youthinfaith.ui.theme.YouthinfaithTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -21,7 +23,7 @@ import com.sekaguchi.youthinfaith.ui.theme.YouthinfaithTheme
 fun DetailScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
     Scaffold(
         modifier = modifier,
-        topBar = { TopAppBar(title = { Text("詳細") }) }
+        topBar = { TopAppBar(title = { Text(stringResource(R.string.detail_title)) }) }
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -31,12 +33,12 @@ fun DetailScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text("詳細画面")
+            Text(stringResource(R.string.detail_body))
             Button(
                 onClick = onBack,
                 modifier = Modifier.padding(top = 16.dp)
             ) {
-                Text("戻る")
+                Text(stringResource(R.string.detail_back))
             }
         }
     }
