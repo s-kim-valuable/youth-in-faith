@@ -4,7 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.Composable
 import androidx.navigation3.runtime.NavEntry
+import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import com.sekaguchi.youthinfaith.navigation.DetailRoute
@@ -21,28 +23,33 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             YouthinfaithTheme {
-                val backStack = rememberNavBackStack(HomeRoute)
-
-                NavDisplay(
-                    backStack = backStack,
-                    onBack = { if (backStack.size > 1) backStack.removeLast() },
-                    entryProvider = { key ->
-                        when (key) {
-                            HomeRoute -> NavEntry(key) {
-                                HomeScreen(
-                                    onNavigateToDetail = { backStack.add(DetailRoute) }
-                                )
-                            }
-                            DetailRoute -> NavEntry(key) {
-                                DetailScreen(
-                                    onBack = { backStack.removeLast() }
-                                )
-                            }
-                            else -> error("Unknown route: $key")
-                        }
-                    }
-                )
+                YouthInFaithApp()
             }
         }
     }
+}
+
+@Composable
+fun YouthInFaithApp() {
+    val backStack = rememberNavBackStack(HomeRoute)
+
+    NavDisplay(
+        backStack = backStack,
+        onBack = { if (backStack.size > 1) backStack.removeLast() },
+        entryProvider = { key: NavKey ->
+            when (key) {
+                HomeRoute -> NavEntry(key) {
+                    HomeScreen(
+                        onNavigateToDetail = { backStack.add(DetailRoute) }
+                    )
+                }
+                DetailRoute -> NavEntry(key) {
+                    DetailScreen(
+                        onBack = { backStack.removeLast() }
+                    )
+                }
+                else -> error("Unknown route: $key")
+            }
+        }
+    )
 }

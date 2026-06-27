@@ -12,12 +12,15 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.sekaguchi.youthinfaith.ui.theme.YouthinfaithTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailScreen(onBack: () -> Unit) {
+fun DetailScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
     Scaffold(
+        modifier = modifier,
         topBar = { TopAppBar(title = { Text("詳細") }) }
     ) { innerPadding ->
         Column(
@@ -36,5 +39,13 @@ fun DetailScreen(onBack: () -> Unit) {
                 Text("戻る")
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun DetailScreenPreview() {
+    YouthinfaithTheme {
+        DetailScreen(onBack = {})
     }
 }
