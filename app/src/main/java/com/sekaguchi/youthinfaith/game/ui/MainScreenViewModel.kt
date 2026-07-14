@@ -101,7 +101,7 @@ class MainScreenViewModel @Inject constructor(
     ): Pair<Map<String, Int>, Set<String>> {
         val wrongCounts = teams.mapValues { (_, state) ->
             val matchCount = state.input.zip(correctAnswer).count { (a, b) -> a == b }
-            correctAnswer.length - matchCount
+            maxOf(state.input.length, correctAnswer.length) - matchCount
         }
         val successTeams = wrongCounts.filter { (_, count) -> count == 0 }.keys.toSet()
         return wrongCounts to successTeams

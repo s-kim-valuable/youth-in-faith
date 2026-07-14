@@ -16,7 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -108,8 +108,7 @@ fun GameSetupScreen(
                 Spacer(Modifier.height(12.dp))
             }
 
-            items(uiState.teamNames) { name ->
-                val index = uiState.teamNames.indexOf(name)
+            itemsIndexed(uiState.teamNames) { index, name ->
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.padding(vertical = 6.dp)
