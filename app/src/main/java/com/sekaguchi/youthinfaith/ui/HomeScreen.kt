@@ -20,7 +20,11 @@ import com.sekaguchi.youthinfaith.ui.theme.YouthinfaithTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(onNavigateToDetail: () -> Unit, modifier: Modifier = Modifier) {
+fun HomeScreen(
+    onNavigateToDetail: () -> Unit,
+    onNavigateToGame: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Scaffold(
         modifier = modifier,
         topBar = { TopAppBar(title = { Text(stringResource(R.string.home_title)) }) }
@@ -40,6 +44,12 @@ fun HomeScreen(onNavigateToDetail: () -> Unit, modifier: Modifier = Modifier) {
             ) {
                 Text(stringResource(R.string.home_navigate_to_detail))
             }
+            Button(
+                onClick = onNavigateToGame,
+                modifier = Modifier.padding(top = 8.dp)
+            ) {
+                Text(stringResource(R.string.game_start))
+            }
         }
     }
 }
@@ -48,6 +58,6 @@ fun HomeScreen(onNavigateToDetail: () -> Unit, modifier: Modifier = Modifier) {
 @Composable
 private fun HomeScreenPreview() {
     YouthinfaithTheme {
-        HomeScreen(onNavigateToDetail = {})
+        HomeScreen(onNavigateToDetail = {}, onNavigateToGame = {})
     }
 }
