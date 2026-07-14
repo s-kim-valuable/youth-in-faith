@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">youth-in-faith</string>
+    <string name="home_title">ホーム</string>
+    <string name="home_body">ホーム画面</string>
+    <string name="home_navigate_to_detail">詳細へ</string>
+    <string name="detail_title">詳細</string>
+    <string name="detail_body">詳細画面</string>
+    <string name="detail_back">戻る</string>
 </resources>
