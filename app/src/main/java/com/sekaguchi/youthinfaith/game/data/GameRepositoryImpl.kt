@@ -13,8 +13,7 @@ import com.sekaguchi.youthinfaith.game.domain.defaultTeams
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
+import kotlinx.coroutines.tasks.await
 
 class GameRepositoryImpl(private val database: FirebaseDatabase) : GameRepository {
 
@@ -79,50 +78,51 @@ class GameRepositoryImpl(private val database: FirebaseDatabase) : GameRepositor
     }
 
     override suspend fun saveConfig(config: GameConfig) {
-        database.getReference("config/team_count").setValue(config.teams.size)
-        config.teams.forEach { team ->
-            database.getReference("config/team_names/${team.id}").setValue(team.displayName)
-        }
-        config.teams.forEach { team ->
-            val ref = database.getReference("teams/${team.id}")
-            ref.child("input").setValue("")
-            ref.child("status").setValue("typing")
-        }
+        database.getReference("config/team_count").setValue(config.teams.size).await()
+        database.getReference("config/team_names").setValue(
+            config.teams.associate { it.id to it.displayName }
+        ).await()
+        // 旧チームのデータを破棄してから新チームを書き込む（チーム数減少時の残存対策）
+        database.getReference("teams").setValue(
+            config.teams.associate { it.id to mapOf("input" to "", "status" to "typing") }
+        ).await()
     }
 
     override suspend fun updateTeamInput(team: String, input: String) {
-        database.getReference("teams/$team/input").setValue(input)
+        database.getReference("teams/$team/input").setValue(input).await()
     }
 
     override suspend fun submitTeam(team: String) {
-        database.getReference("teams/$team/status").setValue("submitted")
+        database.getReference("teams/$team/status").setValue("submitted").await()
     }
 
     override suspend fun setCorrectAnswer(answer: String) {
-        database.getReference("game/correct_answer").setValue(answer)
+        database.getReference("game/correct_answer").setValue(answer).await()
     }
 
     override suspend fun revealAnswer() {
-        database.getReference("game/is_revealed").setValue(true)
+        database.getReference("game/is_revealed").setValue(true).await()
     }
 
     override suspend fun resetGame(teamIds: List<String>) {
-        database.getReference("game/is_revealed").setValue(false)
+        database.getReference("game/is_revealed").setValue(false).await()
         teamIds.forEach { id ->
-            database.getReference("teams/$id/input").setValue("")
-            database.getReference("teams/$id/status").setValue("typing")
+            val ref = database.getReference("teams/$id")
+            ref.child("input").setValue("").await()
+            ref.child("status").setValue("typing").await()
         }
     }
 
-    override suspend fun getHostPin(): String = suspendCoroutine { cont ->
-        database.getReference("config/host_pin").get()
-            .addOnSuccessListener { snapshot ->
-                cont.resume(snapshot.getValue(String::class.java) ?: "1234")
-            }
-            .addOnFailureListener { cont.resume("1234") }
-    }
+    override suspend fun getHostPin(): String = runCatching {
+        val snapshot = database.getReference("config/host_pin").get().await()
+        snapshot.getValue(String::class.java) ?: DEFAULT_HOST_PIN
+    }.getOrDefault(DEFAULT_HOST_PIN)
 
     override suspend fun setHostPin(pin: String) {
-        database.getReference("config/host_pin").setValue(pin)
+        database.getReference("config/host_pin").setValue(pin).await()
+    }
+
+    private companion object {
+        const val DEFAULT_HOST_PIN = "1234"
     }
 }

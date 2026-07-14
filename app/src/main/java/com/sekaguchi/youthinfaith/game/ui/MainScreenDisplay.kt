@@ -34,7 +34,6 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -56,7 +55,7 @@ fun MainScreenDisplay(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color(0xFF212121))
+                .background(GameSurfaceDark)
                 .padding(horizontal = 8.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -71,7 +70,7 @@ fun MainScreenDisplay(
                 modifier = Modifier
                     .clickable { viewModel.onTimerTap() }
                     .background(
-                        if (uiState.isTimerRunning) Color(0xFFB71C1C) else Color(0xFF424242)
+                        if (uiState.isTimerRunning) TimerRunningRed else TimerIdleGray
                     )
                     .padding(horizontal = 24.dp, vertical = 8.dp),
                 contentAlignment = Alignment.Center
@@ -99,7 +98,7 @@ fun MainScreenDisplay(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(1.dp)
-                            .background(Color.Gray.copy(alpha = 0.4f))
+                            .background(Divider)
                     )
                 }
                 TeamRow(
@@ -117,7 +116,7 @@ fun MainScreenDisplay(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color(0xFF212121))
+                .background(GameSurfaceDark)
         ) {
             Box(
                 modifier = Modifier
@@ -173,7 +172,7 @@ private fun TeamRow(
                 modifier = Modifier
                     .width(1.dp)
                     .fillMaxHeight()
-                    .background(Color.Gray.copy(alpha = 0.4f))
+                    .background(Divider)
             )
 
             // 입력 텍스트 (중앙)
@@ -208,15 +207,15 @@ private fun TeamRow(
                     modifier = Modifier
                         .width(1.dp)
                         .fillMaxHeight()
-                        .background(Color.Gray.copy(alpha = 0.4f))
+                        .background(Divider)
                 )
                 Box(
                     modifier = Modifier
                         .width(100.dp)
                         .fillMaxHeight()
                         .background(
-                            if (isSuccess) Color(0xFF00C853).copy(alpha = 0.15f)
-                            else Color(0xFFD50000).copy(alpha = 0.1f)
+                            if (isSuccess) CorrectGreen.copy(alpha = 0.15f)
+                            else WrongRed.copy(alpha = 0.1f)
                         ),
                     contentAlignment = Alignment.Center
                 ) {
@@ -224,7 +223,7 @@ private fun TeamRow(
                         text = if (isSuccess) "✓ 정답!" else "✗ ${wrongCount}개 틀림",
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
-                        color = if (isSuccess) Color(0xFF00C853) else Color(0xFFD50000)
+                        color = if (isSuccess) CorrectGreen else WrongRed
                     )
                 }
             }
@@ -259,7 +258,7 @@ private fun buildComparisonAnnotatedString(input: String, answer: String): Annot
             val isCorrect = index < answer.length && char == answer[index]
             withStyle(
                 SpanStyle(
-                    color = if (isCorrect) Color(0xFF00C853) else Color(0xFFD50000),
+                    color = if (isCorrect) CorrectGreen else WrongRed,
                     fontWeight = if (isCorrect) FontWeight.Bold else FontWeight.Normal
                 )
             ) {

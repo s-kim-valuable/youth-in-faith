@@ -44,6 +44,8 @@ fun TeamClientScreen(
     val teamConfig by viewModel.teamConfig.collectAsState()
     val focusManager = LocalFocusManager.current
 
+    // ゲーム中の誤タップでロビーに戻らないよう back を無効化する。
+    // 抜けたい場合はホスト側の「リセット」から復帰する運用を想定。
     BackHandler(enabled = true) {}
 
     LaunchedEffect(team) {
