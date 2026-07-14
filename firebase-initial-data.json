@@ -1,0 +1,11 @@
+{
+  "game": {
+    "correct_answer": "여름날의 추억 속에 머물러",
+    "is_revealed": false
+  },
+  "teams": {
+    "red":   { "input": "", "status": "typing" },
+    "blue":  { "input": "", "status": "typing" },
+    "green": { "input": "", "status": "typing" }
+  }
+}

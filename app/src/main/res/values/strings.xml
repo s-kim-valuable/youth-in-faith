@@ -6,4 +6,12 @@
     <string name="detail_title">詳細</string>
     <string name="detail_body">詳細画面</string>
     <string name="detail_back">戻る</string>
+    <string name="game_start">놀토 받아쓰기 시작</string>
+    <string name="game_lobby_title">놀토 받아쓰기</string>
+    <string name="game_lobby_subtitle">모드를 선택하세요</string>
+    <string name="game_main_screen">메인 스크린 (호스트)</string>
+    <string name="game_submit">제출하기</string>
+    <string name="game_submitted">제출 완료!</string>
+    <string name="game_input_hint">여기에 가사를 입력하세요…</string>
+    <string name="game_winner">원샷!</string>
 </resources>
