@@ -35,17 +35,19 @@ fun YouthInFaithApp() {
 
     NavDisplay(
         backStack = backStack,
-        onBack = { if (backStack.size > 1) backStack.removeLast() },
+        onBack = { if (backStack.size > 1) backStack.removeLastOrNull() },
         entryProvider = { key: NavKey ->
             when (key) {
                 HomeRoute -> NavEntry(key) {
                     HomeScreen(
-                        onNavigateToDetail = { backStack.add(DetailRoute) }
+                        onNavigateToDetail = {
+                            if (backStack.lastOrNull() != DetailRoute) backStack.add(DetailRoute)
+                        }
                     )
                 }
                 DetailRoute -> NavEntry(key) {
                     DetailScreen(
-                        onBack = { backStack.removeLast() }
+                        onBack = { backStack.removeLastOrNull() }
                     )
                 }
                 else -> error("Unknown route: $key")
